@@ -40,7 +40,7 @@ export function DraggableMarker() {
   const { theme } = useTheme();
 
   return (
-    <div className="h-[400px] w-full rounded-xl border overflow-hidden">
+    <div className="h-[200px] w-full rounded-xl border overflow-hidden">
       <Map
         theme={theme}
         ref={mapRef}
@@ -52,7 +52,7 @@ export function DraggableMarker() {
         zoom={15}
       >
         <MapControls
-          className="absolute bottom-12 right-2 z-10"
+          className="absolute bottom-6 right-2 z-10 scale-75"
           showZoom
           showCompass
           showLocate

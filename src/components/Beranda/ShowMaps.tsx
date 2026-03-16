@@ -38,7 +38,7 @@ export default function ShowMaps() {
         }
       >
         <MapControls
-          className="absolute bottom-24 right-2 z-10 sm:bottom-32 sm:me-3 lg:bottom-2 lg:me-0"
+          className="absolute bottom-24 right-2 z-10 sm:bottom-32 sm:me-3 lg:bottom-12 lg:me-0"
           showZoom
           showCompass
           showLocate
