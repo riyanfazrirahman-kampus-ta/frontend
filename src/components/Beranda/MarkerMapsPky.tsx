@@ -12,9 +12,9 @@ const getColor = (cls: string) => {
     case "lubang":
       return "bg-red-500";
     case "retak":
-      return "bg-yellow-500";
-    case "alur":
       return "bg-blue-500";
+    case "alur":
+      return "bg-yellow-500";
     default:
       return "bg-green-500";
   }

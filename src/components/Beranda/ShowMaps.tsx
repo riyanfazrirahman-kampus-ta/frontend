@@ -38,7 +38,7 @@ export default function ShowMaps() {
         }
       >
         <MapControls
-          className="absolute bottom-24 right-2 z-10 sm:bottom-32 sm:me-3 lg:bottom-12 lg:me-0"
+          className="absolute bottom-50 right-4 z-10 sm:bottom-32 sm:me-3 lg:bottom-12 lg:me-0"
           showZoom
           showCompass
           showLocate
@@ -48,7 +48,7 @@ export default function ShowMaps() {
         <MarkerMapsPky />
       </Map>
 
-      <div className="absolute top-22 right-2 z-10 sm:top-24 sm:me-3 lg:top-2 lg:me-0">
+      <div className="absolute top-20 right-4 z-10 sm:top-24 sm:me-3 lg:top-2 lg:me-0">
         <select
           value={style}
           onChange={(e) => setStyle(e.target.value as StyleKey)}
