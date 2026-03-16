@@ -47,13 +47,13 @@ const ImgDropZone: React.FC<ImgDropZoneProps> = ({
         {/* Hidden Input */}
         <input {...getInputProps()} />
 
-        <div className="dz-message flex flex-col items-center !m-0">
+        <div className="dz-message min-h-[300px] flex flex-col justify-center items-center !m-0">
           {currentImage ? (
             <div className="rounded overflow-hidden">
               <img
                 src={currentImage}
                 alt="Current bank image"
-                className="w-100 h-100 p-2  object-cover"
+                className="h-100 p-2  object-cover"
               />
             </div>
           ) : (

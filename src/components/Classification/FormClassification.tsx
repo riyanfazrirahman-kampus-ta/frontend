@@ -40,7 +40,7 @@ export default function FormClassification() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="space-y-4 mb-15">
       <ImgDropZone
         onFileSelect={handleFileSelect}
         currentImage={previewUrl || undefined}
