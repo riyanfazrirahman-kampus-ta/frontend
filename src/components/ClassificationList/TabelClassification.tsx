@@ -7,6 +7,7 @@ import {
 } from "../ui/table";
 
 import { useClassificationHistory } from "../../hooks/useClassificationHistory";
+import { deleteClassification } from "@/api/classificationApi";
 
 export default function TabelClassification() {
   const { data, loading } = useClassificationHistory();
@@ -18,6 +19,22 @@ export default function TabelClassification() {
       </div>
     );
   }
+
+  const handleDelete = async (id: string) => {
+    const confirmDelete = confirm("Yakin ingin menghapus data ini?");
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteClassification(id);
+
+      window.location.reload(); // cara paling cepat
+    } catch (error) {
+      console.error(error);
+      alert("Gagal menghapus data");
+    }
+  };
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -78,7 +95,7 @@ export default function TabelClassification() {
                 </TableCell>
 
                 <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                  <button>
+                  <button onClick={() => handleDelete(item.id)}>
                     <span className="text-red-500">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

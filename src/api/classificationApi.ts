@@ -117,3 +117,16 @@ export async function classificationImageSave(
   const json = await res.json();
   return json.data;
 }
+
+// Delete
+export async function deleteClassification(id: string) {
+  const res = await fetch(`${BASE_URL}/classification/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Gagal menghapus data");
+  }
+
+  return res.json();
+}
