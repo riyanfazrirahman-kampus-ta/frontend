@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import ComponentCard from "../../common/ComponentCard";
 
 interface ImgDropZoneProps {
   onFileSelect: (file: File) => void;
