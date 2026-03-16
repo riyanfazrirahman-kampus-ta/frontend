@@ -27,7 +27,8 @@ export interface ClassificationData {
     _nanoseconds: number;
   };
 }
-const BASE_URL = "http://localhost:3000/api";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // Models Status
 export async function fetchStatus() {
