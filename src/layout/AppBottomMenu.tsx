@@ -40,7 +40,7 @@ const AppBottomMenu: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-9999 flex justify-center pb-0 sm:pb-2 px-0 sm:px-4 lg:pb-3 lg:px-8 pointer-events-none">
+    <nav className="fixed bottom-0 left-0 right-0 z-9999 flex justify-center pb-0 sm:pb-2 px-0 sm:px-10 lg:pb-3 lg:px-8 pointer-events-none">
       <div className="w-full lg:max-w-6xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-none sm:rounded-2xl lg:rounded-full border-t sm:border border-white/20 dark:border-gray-800/30 shadow-lg pointer-events-auto theme-transition">
         <div className="flex items-center h-20 sm:h-24">
           {/* LEFT AREA */}
