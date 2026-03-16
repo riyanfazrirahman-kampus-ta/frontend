@@ -44,7 +44,7 @@ const ImgDropZone: React.FC<ImgDropZoneProps> = ({
         id="demo-upload"
       >
         {/* Hidden Input */}
-        <input {...getInputProps()} />
+        <input {...getInputProps()} capture="environment" />
 
         <div className="dz-message min-h-[300px] flex flex-col justify-center items-center !m-0">
           {currentImage ? (
