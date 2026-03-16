@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
   Map,
   MapControls,
@@ -9,11 +8,13 @@ import {
   MarkerContent,
   MarkerPopup,
 } from "@/components/ui/map";
-import { MapPin } from "lucide-react";
-import { useTheme } from "@/context/ThemeContext";
 import { useLocationContext } from "@/context/LocationContext";
+import { useTheme } from "@/context/ThemeContext";
+import { MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { getAddress } from "../ui/address";
 
-export function DraggableMarker() {
+export default function DraggableMarker({ setLocation }: any) {
   const { location } = useLocationContext();
 
   const [draggableMarker, setDraggableMarker] = useState({
@@ -21,34 +22,44 @@ export function DraggableMarker() {
     lat: -2.2074064,
   });
 
+  const mapRef = useRef<MapRef>(null);
+  const { theme } = useTheme();
+
   useEffect(() => {
     if (!location) return;
 
-    setDraggableMarker({
+    const newLocation = {
       lng: location.longitude,
       lat: location.latitude,
-    });
+    };
+
+    setDraggableMarker(newLocation);
+
+    // ambil address dari koordinat
+    const fetchAddress = async () => {
+      const address = await getAddress(newLocation.lat, newLocation.lng);
+
+      setLocation({
+        latitude: newLocation.lat,
+        longitude: newLocation.lng,
+        address: address || "",
+      });
+    };
+
+    fetchAddress();
 
     mapRef.current?.flyTo({
-      center: [location.longitude, location.latitude],
+      center: [newLocation.lng, newLocation.lat],
       zoom: 15,
     });
   }, [location]);
-
-  const mapRef = useRef<MapRef>(null);
-
-  const { theme } = useTheme();
 
   return (
     <div className="h-[200px] w-full rounded-xl border overflow-hidden">
       <Map
         theme={theme}
         ref={mapRef}
-        center={
-          location
-            ? [location.longitude, location.latitude]
-            : [113.9152386, -2.2074064]
-        }
+        center={[draggableMarker.lng, draggableMarker.lat]}
         zoom={15}
       >
         <MapControls
@@ -63,8 +74,19 @@ export function DraggableMarker() {
           draggable
           longitude={draggableMarker.lng}
           latitude={draggableMarker.lat}
-          onDragEnd={(lngLat) => {
-            setDraggableMarker({ lng: lngLat.lng, lat: lngLat.lat });
+          onDragEnd={async (lngLat) => {
+            const lat = lngLat.lat;
+            const lng = lngLat.lng;
+
+            setDraggableMarker({ lat, lng });
+
+            const address = await getAddress(lat, lng);
+
+            setLocation({
+              latitude: lat,
+              longitude: lng,
+              address: address || "",
+            });
           }}
         >
           <MarkerContent>
@@ -75,6 +97,7 @@ export function DraggableMarker() {
               />
             </div>
           </MarkerContent>
+
           <MarkerPopup>
             <div className="space-y-1">
               <p className="font-medium text-foreground">Coordinates</p>

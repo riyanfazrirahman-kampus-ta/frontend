@@ -7,10 +7,10 @@ export default function PageClassification() {
   return (
     <PageWrapper>
       <PageMeta
-        title="Klasifikasi"
+        title="Klasifikasi Gambar"
         description="This is React.js Form Elements  Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
       />
-      <PageBreadcrumb pageTitle="Klasifikasi" />
+      <PageBreadcrumb pageTitle="Klasifikasi Gambar" />
       <div className="grid grid-cols-1">
         <div className="space-y-6">
           <FormClassification />

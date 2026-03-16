@@ -68,7 +68,7 @@ export async function fetchClassificationHistory(): Promise<
 }
 
 // Prediksi
-export async function predictImage(file: File, model_name: string) {
+export async function classificationImage(file: File, model_name: string) {
   const formData = new FormData();
 
   formData.append("file", file);
@@ -80,6 +80,37 @@ export async function predictImage(file: File, model_name: string) {
   });
 
   if (!res.ok) {
+    throw new Error("Prediction failed");
+  }
+
+  const json = await res.json();
+  return json.data;
+}
+
+// Save Prediksi
+export async function classificationImageSave(
+  file: File,
+  model: string,
+  predictions: any,
+  location: any,
+) {
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("model", model);
+
+  // object harus di stringify
+  formData.append("predictions", JSON.stringify(predictions));
+  formData.append("location", JSON.stringify(location));
+
+  const res = await fetch(`${BASE_URL}/classification/save-predict`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("API ERROR:", text);
     throw new Error("Prediction failed");
   }
 
