@@ -8,9 +8,16 @@ import {
 
 import { useClassificationHistory } from "../../hooks/useClassificationHistory";
 
-export default function ClassificationList() {
+export default function TabelClassification() {
   const { data, loading } = useClassificationHistory();
   if (loading) return <div className="p-5">Loading...</div>;
+  if (!data || data.length === 0) {
+    return (
+      <div className="p-10 text-center text-gray-500 dark:text-gray-400">
+        Belum ada riwayat klasifikasi
+      </div>
+    );
+  }
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">

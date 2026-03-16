@@ -1,4 +1,4 @@
-import ClassificationList from "@/components/Classification/ClassificationList";
+import TabelClassification from "@/components/ClassificationList/TabelClassification";
 import PageBreadcrumb from "../components/common/PageBreadCrumb";
 import PageMeta from "../components/common/PageMeta";
 import PageWrapper from "../components/common/PageWrapper";
@@ -13,7 +13,7 @@ export default function PageClassificationList() {
       <PageBreadcrumb pageTitle="Daftar Klasifikasi" />
       <div className="grid grid-cols-1">
         <div className="space-y-6">
-          <ClassificationList />
+          <TabelClassification />
         </div>
       </div>
     </PageWrapper>
