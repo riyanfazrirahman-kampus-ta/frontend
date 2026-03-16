@@ -41,7 +41,7 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({
         });
         setLoading(false);
       },
-      (err) => {
+      (_err) => {
         setError("Gagal mendapatkan lokasi");
         setLoading(false);
       },
