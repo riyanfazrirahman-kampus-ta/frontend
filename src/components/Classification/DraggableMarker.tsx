@@ -5,6 +5,7 @@ import {
   MapControls,
   MapMarker,
   MapRef,
+  MapViewport,
   MarkerContent,
   MarkerPopup,
 } from "@/components/ui/map";
@@ -20,6 +21,13 @@ export default function DraggableMarker({ setLocation }: any) {
   const [draggableMarker, setDraggableMarker] = useState({
     lng: 113.9152386,
     lat: -2.2074064,
+  });
+
+  const [viewport, setViewport] = useState<MapViewport>({
+    center: [113.9152386, -2.2074064],
+    zoom: 15,
+    bearing: 0,
+    pitch: 0,
   });
 
   const mapRef = useRef<MapRef>(null);
@@ -61,7 +69,24 @@ export default function DraggableMarker({ setLocation }: any) {
         ref={mapRef}
         center={[draggableMarker.lng, draggableMarker.lat]}
         zoom={15}
+        viewport={viewport}
+        onViewportChange={setViewport}
       >
+        <div className="absolute top-2 left-2 z-10 flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono bg-background/80 backdrop-blur px-2 py-1.5 rounded border">
+          <span>
+            <span className="text-muted-foreground">lng:</span>{" "}
+            {viewport.center[0].toFixed(3)}
+          </span>
+          <span>
+            <span className="text-muted-foreground">lat:</span>{" "}
+            {viewport.center[1].toFixed(3)}
+          </span>
+          <span>
+            <span className="text-muted-foreground">zoom:</span>{" "}
+            {viewport.zoom.toFixed(1)}
+          </span>
+        </div>
+
         <MapControls
           className="absolute bottom-6 right-2 z-10 scale-75"
           showZoom

@@ -51,7 +51,7 @@ export async function fetchModelsAvalible() {
   const json = await res.json();
   if (json.status !== "success") return [];
 
-  return json.data;
+  return json.data.available_models;
 }
 
 // Get Data History

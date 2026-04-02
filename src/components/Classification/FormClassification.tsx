@@ -37,7 +37,7 @@ export default function FormClassification() {
       );
 
       console.log("saved", res);
-      alert("Data berhasil disimpan ✅");
+      alert("Data berhasil disimpan.");
     } catch (err) {
       console.error(err);
       alert("Gagal menyimpan data");
@@ -52,7 +52,12 @@ export default function FormClassification() {
 
       <DraggableMarker setLocation={setLocation} />
 
-      <Button className="w-full" onClick={handleSave} disabled={saving}>
+      <Button
+        className="w-full"
+        onClick={handleSave}
+        disabled={saving}
+        size="lg"
+      >
         {saving ? "Menyimpan..." : "Simpan"}
       </Button>
     </div>

@@ -39,37 +39,17 @@ export default function TabelClassification() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
         <Table>
-          {/* Table Header */}
-          <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-            <TableRow>
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Hasil
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Aksi
-              </TableCell>
-            </TableRow>
-          </TableHeader>
-
           {/* Table Body */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {data.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="px-5 py-4 sm:px-6 text-start">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 overflow-hidden rounded-full">
+                    <div className="w-14 h-14 flex-shrink-0 overflow-hidden rounded-full border border-gray-200 dark:border-gray-800">
                       <img
-                        width={40}
-                        height={40}
                         src={item.image.url}
                         alt={item.image.format}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <div>
@@ -84,8 +64,14 @@ export default function TabelClassification() {
                                 : "text-green-500"
                         } text-theme-sm dark:text-white/90"`}
                       >
-                        {item.predictions[0].class} ({" "}
-                        {item.predictions[0].confidence} %)
+                        {item.predictions[0].class === "lubang"
+                          ? "Lubang"
+                          : item.predictions[0].class === "alur"
+                            ? "Alur"
+                            : item.predictions[0].class === "retak"
+                              ? "Retak"
+                              : "Tidak Rusak"}{" "}
+                        ( {item.predictions[0].confidence} % )
                       </span>
                       <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
                         {item.location.address}

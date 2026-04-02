@@ -1,33 +1,51 @@
-import { classificationImage } from "@/api/classificationApi";
-import { useState } from "react";
+import {
+  classificationImage,
+  fetchModelsAvalible,
+} from "@/api/classificationApi";
+import { useClassificationModel } from "@/context/ClassificationModelContext";
+import { useEffect, useState } from "react";
 import ImgDropZone from "../form/form-elements/ImgDropZone";
+import Select from "../form/Select";
 
 export default function ClassificationImage({ setFile, setPredictions }: any) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [currentFile, setCurrentFile] = useState<File | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
 
-  const handleFileSelect = async (file: File) => {
-    setFile(file);
+  const [models, setModels] = useState<string[]>([]);
+  const { selectedModel, setSelectedModel } = useClassificationModel();
 
-    const url = URL.createObjectURL(file);
-    setPreviewUrl(url);
+  const modelOptions = models.map((model) => ({
+    value: model,
+    label: model,
+  }));
 
-    // langsung kirim ke backend
-    await sendImage(file);
-  };
+  useEffect(() => {
+    const loadModels = async () => {
+      try {
+        const data = await fetchModelsAvalible();
 
-  const sendImage = async (file: File) => {
+        // jika API return array object: [{ model_name: "Model-RDC-1.1" }]
+        const mapped = data.map((item: any) => item.model_name || item);
+
+        setModels(mapped);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    loadModels();
+  }, []);
+
+  const sendImage = async (file: File, model: string) => {
     try {
       setLoading(true);
       setResult(null);
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("model_name", "jalan");
+      const res = await classificationImage(file, model);
 
-      const res = await classificationImage(file, "Model-RDC-1.1");
       setResult(res.predictions);
       setPredictions(res.predictions);
     } catch (err) {
@@ -37,8 +55,33 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
     }
   };
 
+  const handleFileSelect = async (file: File) => {
+    setCurrentFile(file);
+    setFile(file);
+
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+
+    await sendImage(file, selectedModel);
+  };
+
+  // Jika model diganti, prediksi ulang otomatis menggunakan gambar yang sama
+  useEffect(() => {
+    if (currentFile) {
+      sendImage(currentFile, selectedModel);
+    }
+  }, [selectedModel]);
+
   return (
     <div className="space-y-4">
+      <Select
+        options={modelOptions}
+        defaultValue={selectedModel}
+        placeholder="Pilih Model"
+        onChange={(value) => setSelectedModel(value)}
+        className="dark:bg-dark-900"
+      />
+
       <ImgDropZone
         onFileSelect={handleFileSelect}
         currentImage={previewUrl || undefined}
@@ -53,15 +96,23 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
 
       {/* Result */}
       {result && (
-        <div className="p-4 rounded-xl border space-y-2">
-          <h3 className="font-bold">Hasil Klasifikasi</h3>
+        <div className="p-4 rounded-xl border space-y-2 bg-blue-100 dark:bg-slate-800">
+          <h3 className="font-bold text-center">Hasil Klasifikasi</h3>
 
-          {result.map((item: any, index: number) => (
-            <div key={index} className="flex justify-between p-2 rounded">
-              <span>{item.class}</span>
-              <span>{item.confidence} %</span>
-            </div>
-          ))}
+          {result
+            .filter((item: any) => item.confidence > 0)
+            .map((item: any, index: number) => (
+              <div
+                key={index}
+                className={`flex justify-between rounded-2xl px-5 py-2
+                bg-white text-black dark:bg-slate-700 dark:text-white
+                ${index === 0 ? "border-2 border-blue-400 dark:border-blue-300" : ""}
+              `}
+              >
+                <span>{item.class}</span>
+                <span>{item.confidence} %</span>
+              </div>
+            ))}
         </div>
       )}
     </div>

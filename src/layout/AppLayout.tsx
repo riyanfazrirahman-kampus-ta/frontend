@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import AppBottomMenu from "./AppBottomMenu";
 import AppHeader from "./AppHeader";
 import { LocationProvider } from "../context/LocationContext";
+import { ClassificationModelProvider } from "@/context/ClassificationModelContext";
 
 const LayoutContent: React.FC = () => {
   return (
@@ -18,7 +19,9 @@ const LayoutContent: React.FC = () => {
 const AppLayout: React.FC = () => {
   return (
     <LocationProvider>
-      <LayoutContent />
+      <ClassificationModelProvider>
+        <LayoutContent />
+      </ClassificationModelProvider>
     </LocationProvider>
   );
 };
