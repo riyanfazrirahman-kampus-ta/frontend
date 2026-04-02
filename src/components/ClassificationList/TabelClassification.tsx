@@ -1,13 +1,7 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
+import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 
-import { useClassificationHistory } from "../../hooks/useClassificationHistory";
 import { deleteClassification } from "@/api/classificationApi";
+import { useClassificationHistory } from "../../hooks/useClassificationHistory";
 
 export default function TabelClassification() {
   const { data, loading } = useClassificationHistory();
