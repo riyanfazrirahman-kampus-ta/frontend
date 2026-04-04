@@ -28,23 +28,24 @@ export interface ClassificationData {
   };
 }
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const BASE_API = import.meta.env.VITE_BASE_API;
 
 // Models Status
 export async function fetchStatus() {
-  const res = await fetch(`${BASE_URL}/classification`);
+  const res = await fetch(`${BASE_API}/api/classification`);
 
-  if (!res.ok) throw new Error("Gagal fetch history");
+  if (!res.ok) {
+    throw new Error("Model belum aktif");
+  }
 
   const json = await res.json();
-  if (json.status !== "success") return [];
 
-  return json.data;
+  return json.status;
 }
 
 // Models Tersedia
 export async function fetchModelsAvalible() {
-  const res = await fetch(`${BASE_URL}/classification/models`);
+  const res = await fetch(`${BASE_API}/api/classification/models`);
 
   if (!res.ok) throw new Error("Gagal fetch history");
 
@@ -58,7 +59,7 @@ export async function fetchModelsAvalible() {
 export async function fetchClassificationHistory(): Promise<
   ClassificationData[]
 > {
-  const res = await fetch(`${BASE_URL}/classification/history`);
+  const res = await fetch(`${BASE_API}/api/classification/history`);
 
   if (!res.ok) throw new Error("Gagal fetch history");
 
@@ -75,7 +76,7 @@ export async function classificationImage(file: File, model_name: string) {
   formData.append("file", file);
   formData.append("model_name", model_name);
 
-  const res = await fetch(`${BASE_URL}/classification/predict`, {
+  const res = await fetch(`${BASE_API}/api/classification/predict`, {
     method: "POST",
     body: formData,
   });
@@ -104,7 +105,7 @@ export async function classificationImageSave(
   formData.append("predictions", JSON.stringify(predictions));
   formData.append("location", JSON.stringify(location));
 
-  const res = await fetch(`${BASE_URL}/classification/save-predict`, {
+  const res = await fetch(`${BASE_API}/api/classification/save-predict`, {
     method: "POST",
     body: formData,
   });
@@ -121,7 +122,7 @@ export async function classificationImageSave(
 
 // Delete
 export async function deleteClassification(id: string) {
-  const res = await fetch(`${BASE_URL}/classification/${id}`, {
+  const res = await fetch(`${BASE_API}/api/classification/${id}`, {
     method: "DELETE",
   });
 

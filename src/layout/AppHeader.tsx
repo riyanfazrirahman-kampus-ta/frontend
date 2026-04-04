@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
+import { BASE_API } from "@/api/classificationApi";
 
 const AppHeader: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const AppHeader: React.FC = () => {
             alt="Logo"
           />
         </Link>
-        <div>
+        <div className="flex gap-2">
           <ThemeToggleButton />
         </div>
       </div>
