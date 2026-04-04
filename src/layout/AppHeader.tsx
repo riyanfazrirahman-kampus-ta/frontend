@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
-import { BASE_API } from "@/api/classificationApi";
 
 const AppHeader: React.FC = () => {
   return (
