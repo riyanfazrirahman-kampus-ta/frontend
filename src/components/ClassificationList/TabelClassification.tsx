@@ -1,11 +1,11 @@
 import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 
 import { deleteClassification } from "@/api/classificationApi";
-import { useClassificationHistory } from "../../hooks/useClassificationHistory";
-import ClassificationSummary from "./ClassificationSummary";
-import PreviewImage from "../ui/images/PreviewImage";
+import { getBorder, getClass } from "@/utils/classification";
 import { useNavigate } from "react-router";
-import { getBorder, getClass, getColor } from "@/utils/classification";
+import { useClassificationHistory } from "../../hooks/useClassificationHistory";
+import PreviewImage from "../ui/images/PreviewImage";
+import ClassificationSummary from "./ClassificationSummary";
 
 export default function TabelClassification() {
   const { data, loading } = useClassificationHistory();

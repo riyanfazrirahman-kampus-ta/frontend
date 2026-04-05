@@ -1,9 +1,9 @@
+import { classificationImageSave, fetchStatus } from "@/api/classificationApi";
+import { useClassificationModel } from "@/context/ClassificationModelContext";
 import { useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import ClassificationImage from "./ClassificationImage";
 import DraggableMarker from "./DraggableMarker";
-import { classificationImageSave, fetchStatus } from "@/api/classificationApi";
-import { useClassificationModel } from "@/context/ClassificationModelContext";
 
 export default function FormClassification() {
   const [file, setFile] = useState<File | null>(null);
@@ -12,7 +12,7 @@ export default function FormClassification() {
 
   const [modelLoading, setModelLoading] = useState(true);
   const [modelReady, setModelReady] = useState(false);
-  const { selectedModel, setSelectedModel } = useClassificationModel();
+  const { selectedModel } = useClassificationModel();
 
   const [showSuccess, setShowSuccess] = useState(false);
 
