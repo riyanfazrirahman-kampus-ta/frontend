@@ -6,7 +6,7 @@ import { ClassificationModelProvider } from "@/context/ClassificationModelContex
 
 const LayoutContent: React.FC = () => {
   return (
-    <div className="relative h-screen w-full bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative h-screen w-full bg-slate-100 dark:bg-gray-950 transition-colors duration-300">
       <AppHeader />
       <div className="w-full h-full overflow-auto">
         <Outlet />

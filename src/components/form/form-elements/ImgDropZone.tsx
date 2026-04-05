@@ -34,7 +34,7 @@ const ImgDropZone: React.FC<ImgDropZoneProps> = ({
     <div className="transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500">
       <div
         {...getRootProps()}
-        className={`dropzone rounded-xl border-dashed border-gray-300 py-5
+        className={`dropzone rounded-xl border-dashed border-gray-300 py-5 bg-white
         ${
           isDragActive
             ? "border-brand-500 bg-gray-100 dark:bg-gray-800"
@@ -46,7 +46,7 @@ const ImgDropZone: React.FC<ImgDropZoneProps> = ({
         {/* Hidden Input */}
         <input {...getInputProps()} capture="environment" />
 
-        <div className="dz-message min-h-[300px] flex flex-col justify-center items-center !m-0">
+        <div className="dz-message min-h-[300px] flex flex-col justify-center items-center !m-0 ">
           {currentImage ? (
             <div className="rounded overflow-hidden">
               <img

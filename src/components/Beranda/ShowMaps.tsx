@@ -2,6 +2,8 @@ import { Map, MapControls, MapRef } from "@/components/ui/map";
 import { useTheme } from "@/context/ThemeContext";
 import { useEffect, useRef, useState } from "react";
 import MarkerMapsPky from "./MarkerMapsPky";
+import { useSearchParams } from "react-router";
+import { useClassificationHistory } from "@/hooks/useClassificationHistory";
 
 const styles = {
   default: undefined,
@@ -18,9 +20,30 @@ export default function ShowMaps() {
   const selectedStyle = styles[style];
   const is3D = style === "openstreetmap3d";
 
+  const [searchParams] = useSearchParams();
+  const selectedId = searchParams.get("selected");
+  const { data } = useClassificationHistory();
+
   useEffect(() => {
     mapRef.current?.easeTo({ pitch: is3D ? 60 : 0, duration: 500 });
   }, [is3D]);
+
+  useEffect(() => {
+    if (!selectedId || !data.length) return;
+
+    const selectedPlace = data.find((item) => item.id === selectedId);
+
+    if (!selectedPlace) return;
+
+    mapRef.current?.easeTo({
+      center: [
+        selectedPlace.location.longitude,
+        selectedPlace.location.latitude,
+      ],
+      zoom: 15,
+      duration: 1200,
+    });
+  }, [selectedId, data]);
 
   const { theme } = useTheme();
 
@@ -30,7 +53,7 @@ export default function ShowMaps() {
         theme={theme}
         ref={mapRef}
         center={[113.9152386, -2.2074064]}
-        zoom={13}
+        zoom={12.5}
         styles={
           selectedStyle
             ? { light: selectedStyle, dark: selectedStyle }

@@ -79,7 +79,7 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
         defaultValue={selectedModel}
         placeholder="Pilih Model"
         onChange={(value) => setSelectedModel(value)}
-        className="dark:bg-dark-900"
+        className="dark:bg-dark-900 bg-white"
       />
 
       <ImgDropZone

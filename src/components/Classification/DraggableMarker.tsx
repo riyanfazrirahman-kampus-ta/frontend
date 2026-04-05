@@ -25,7 +25,7 @@ export default function DraggableMarker({ setLocation }: any) {
 
   const [viewport, setViewport] = useState<MapViewport>({
     center: [113.9152386, -2.2074064],
-    zoom: 15,
+    zoom: 13,
     bearing: 0,
     pitch: 0,
   });

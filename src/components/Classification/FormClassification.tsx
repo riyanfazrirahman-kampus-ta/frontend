@@ -3,6 +3,7 @@ import Button from "../ui/button/Button";
 import ClassificationImage from "./ClassificationImage";
 import DraggableMarker from "./DraggableMarker";
 import { classificationImageSave, fetchStatus } from "@/api/classificationApi";
+import { useClassificationModel } from "@/context/ClassificationModelContext";
 
 export default function FormClassification() {
   const [file, setFile] = useState<File | null>(null);
@@ -11,6 +12,7 @@ export default function FormClassification() {
 
   const [modelLoading, setModelLoading] = useState(true);
   const [modelReady, setModelReady] = useState(false);
+  const { selectedModel, setSelectedModel } = useClassificationModel();
 
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -63,7 +65,7 @@ export default function FormClassification() {
 
       const res = await classificationImageSave(
         file,
-        "Model-RDC-1.1",
+        selectedModel,
         predictions,
         location,
       );
@@ -152,7 +154,7 @@ export default function FormClassification() {
         className="w-full"
         onClick={handleSave}
         disabled={modelReady ? saving : true}
-        size="lg"
+        size="md"
       >
         {saving ? "Menyimpan..." : "Simpan"}
       </Button>
