@@ -75,7 +75,7 @@ export default function TabelClassification() {
                             className="text-left hover:opacity-80"
                           >
                             <span className={`text-theme-sm`}>
-                              {getClass(item.predictions[0].class)} ({" "}
+                              {getClass(item.predictions[0].class)} (
                               {item.predictions[0].confidence} % )
                             </span>
                             <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
