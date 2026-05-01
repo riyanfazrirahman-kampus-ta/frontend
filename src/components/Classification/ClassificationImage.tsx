@@ -89,8 +89,30 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
 
       {/* Loading */}
       {loading && (
-        <div className="p-4 rounded-xl border text-center">
-          ⏳ Memproses klasifikasi...
+        <div className="p-5 rounded-xl border bg-white dark:bg-slate-900 space-y-4">
+          <div className="flex items-center justify-center gap-3">
+            {/* Spinner */}
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500" />
+
+            <div>
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Memproses Klasifikasi
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Model sedang menganalisis gambar...
+              </p>
+            </div>
+          </div>
+
+          {/* Skeleton Result */}
+          <div className="space-y-2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-10 rounded-xl bg-gray-200 dark:bg-slate-700 animate-pulse"
+              />
+            ))}
+          </div>
         </div>
       )}
 

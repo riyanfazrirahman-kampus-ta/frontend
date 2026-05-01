@@ -15,6 +15,7 @@ export default function FormClassification() {
   const { selectedModel } = useClassificationModel();
 
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const defaultLocation = {
     latitude: -2.2074064,
@@ -29,6 +30,16 @@ export default function FormClassification() {
     setPredictions(null);
     setLocation(defaultLocation);
   };
+
+  useEffect(() => {
+    if (showSuccess) {
+      const t = setTimeout(() => {
+        handleCloseSuccess();
+      }, 2000);
+
+      return () => clearTimeout(t);
+    }
+  }, [showSuccess]);
 
   const checkModelStatus = async () => {
     try {
@@ -51,12 +62,12 @@ export default function FormClassification() {
 
   const handleSave = async () => {
     if (!file) {
-      alert("Silakan upload gambar terlebih dahulu");
+      setError("Silakan upload gambar terlebih dahulu");
       return;
     }
 
     if (!predictions) {
-      alert("Prediksi belum tersedia");
+      setError("Prediksi belum tersedia");
       return;
     }
 
@@ -76,7 +87,7 @@ export default function FormClassification() {
       setShowSuccess(true);
     } catch (err) {
       console.error(err);
-      alert("Gagal menyimpan data");
+      setError("Gagal menyimpan data");
     } finally {
       setSaving(false);
     }
@@ -85,14 +96,14 @@ export default function FormClassification() {
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     resetForm();
-    window.location.reload(); // cara paling cepat
   };
 
   return (
-    <div className="space-y-4 mb-15">
+    <div className="space-y-4 mb-16 pb-16">
+      {error && <div className="text-sm text-red-500 text-center">{error}</div>}
       {showSuccess && (
-        <div className="fixed inset-0 z-99999 h-screen flex items-center justify-center bg-black/50 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+        <div className="fixed inset-0 z-99999 flex items-center justify-center bg-black/50 px-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
               <svg
                 className="h-8 w-8 text-green-600"
@@ -123,10 +134,10 @@ export default function FormClassification() {
           </div>
         </div>
       )}
-
       {modelLoading ? (
-        <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-6 text-center">
-          <p className="text-sm text-gray-500">Model sedang dicek...</p>
+        <div className="rounded-xl border p-6 text-center space-y-3">
+          <p className="text-sm text-gray-500">Mengecek status model...</p>
+          <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500" />
         </div>
       ) : !modelReady ? (
         <div className="rounded-xl border border-yellow-300 dark:border-gray-800  bg-yellow-50 dark:bg-gray-900 p-6 text-center space-y-3">
@@ -147,17 +158,34 @@ export default function FormClassification() {
           />
         </>
       )}
-
       <DraggableMarker location={location} setLocation={setLocation} />
 
       <Button
         className="w-full"
-        onClick={handleSave}
-        disabled={modelReady ? saving : true}
+        variant="primary"
         size="md"
+        onClick={handleSave}
+        disabled={!file || !predictions || saving || !modelReady}
       >
-        {saving ? "Menyimpan..." : "Simpan"}
+        {saving ? (
+          <span className="flex items-center justify-center gap-2">
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            Menyimpan...
+          </span>
+        ) : (
+          "Simpan"
+        )}
       </Button>
+
+      <div className="scale-100 animate-in fade-in zoom-in-95 duration-200">
+        <p className="text-xs text-gray-500 text-center">
+          {!file
+            ? "Upload gambar terlebih dahulu ‼"
+            : !predictions
+              ? "Menunggu hasil klasifikasi .."
+              : "Siap disimpan ✓"}
+        </p>
+      </div>
     </div>
   );
 }
