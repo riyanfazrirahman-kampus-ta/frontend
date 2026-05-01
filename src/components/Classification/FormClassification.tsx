@@ -31,16 +31,6 @@ export default function FormClassification() {
     setLocation(defaultLocation);
   };
 
-  useEffect(() => {
-    if (showSuccess) {
-      const t = setTimeout(() => {
-        handleCloseSuccess();
-      }, 2000);
-
-      return () => clearTimeout(t);
-    }
-  }, [showSuccess]);
-
   const checkModelStatus = async () => {
     try {
       setModelLoading(true);
