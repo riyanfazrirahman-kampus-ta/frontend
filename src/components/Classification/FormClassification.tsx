@@ -135,14 +135,14 @@ export default function FormClassification() {
         </div>
       )}
       {modelLoading ? (
-        <div className="rounded-xl border p-6 text-center space-y-3">
-          <p className="text-sm text-gray-500">Mengecek status model...</p>
+        <div className="rounded-xl border p-6 text-center space-y-3 overflow-hidden border-gray-200 bg-white dark:border-white/[0.05] dark:bg-gray-900">
+          <p className="text-sm text-gray-500">Memuat model...</p>
           <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500" />
         </div>
       ) : !modelReady ? (
         <div className="rounded-xl border border-yellow-300 dark:border-gray-800  bg-yellow-50 dark:bg-gray-900 p-6 text-center space-y-3">
           <p className="text-sm text-yellow-700 dark:text-slate-200">
-            Model belum aktif. Klik refresh untuk mencoba lagi.
+            Tidak dapat terhubung ke server model. Silakan coba lagi!.
           </p>
 
           <Button onClick={checkModelStatus} size="sm" variant="outline">
