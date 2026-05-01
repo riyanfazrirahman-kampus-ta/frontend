@@ -6,6 +6,13 @@ export const CLASS_COLORS: Record<string, string> = {
   default: "text-green-500",
 };
 
+export const CLASS_BG_COLORS: Record<string, string> = {
+  lubang: "bg-red-500",
+  alur: "bg-yellow-500",
+  retak: "bg-blue-500",
+  default: "bg-green-500",
+};
+
 export const CLASS_BORDERS: Record<string, string> = {
   lubang: "border-red-500",
   alur: "border-yellow-500",
@@ -22,6 +29,10 @@ export const CLASS_NAMES: Record<string, string> = {
 
 export function getColor(className: string) {
   return CLASS_COLORS[className] || CLASS_COLORS.default;
+}
+
+export function getBgColor(className: string) {
+  return CLASS_BG_COLORS[className] || CLASS_BG_COLORS.default;
 }
 
 export function getBorder(className: string) {

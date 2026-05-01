@@ -7,27 +7,16 @@ import {
 import { useClassificationHistory } from "@/hooks/useClassificationHistory";
 import { Clock } from "lucide-react";
 import PreviewImage from "../ui/images/PreviewImage";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
-import { getClass } from "@/utils/classification";
-
-const getColor = (cls: string) => {
-  switch (cls) {
-    case "lubang":
-      return "bg-red-500";
-    case "retak":
-      return "bg-blue-500";
-    case "alur":
-      return "bg-yellow-500";
-    default:
-      return "bg-green-500";
-  }
-};
+import { getBgColor, getClass } from "@/utils/classification";
 
 export default function MarkerMapsPky() {
   const { data } = useClassificationHistory();
   const [searchParams] = useSearchParams();
   const selectedId = searchParams.get("selected");
+
+  const navigate = useNavigate();
 
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -54,8 +43,11 @@ export default function MarkerMapsPky() {
 
               {/* Marker utama */}
               <div
-                onClick={() => setOpenId(item.id)}
-                className={`relative size-5 rounded-full ${getColor(
+                onClick={() => {
+                  setOpenId(item.id);
+                  navigate(`/?selected=${item.id}`);
+                }}
+                className={`relative size-5 rounded-full ${getBgColor(
                   item.predictions[0].class,
                 )} border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition-transform`}
               />
