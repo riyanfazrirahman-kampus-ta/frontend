@@ -55,6 +55,10 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
     }
   };
 
+  const handleModelChange = (value: string) => {
+    setSelectedModel(value);
+  };
+
   const handleFileSelect = async (file: File) => {
     setCurrentFile(file);
     setFile(file);
@@ -78,7 +82,7 @@ export default function ClassificationImage({ setFile, setPredictions }: any) {
         options={modelOptions}
         defaultValue={selectedModel}
         placeholder="Pilih Model"
-        onChange={(value) => setSelectedModel(value)}
+        onChange={handleModelChange}
         className="dark:bg-dark-900 bg-white"
       />
 
