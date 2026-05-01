@@ -12,7 +12,7 @@ export default function FormClassification() {
 
   const [modelLoading, setModelLoading] = useState(true);
   const [modelReady, setModelReady] = useState(false);
-  const { selectedModel, setSelectedModel } = useClassificationModel();
+  const { selectedModel } = useClassificationModel();
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
